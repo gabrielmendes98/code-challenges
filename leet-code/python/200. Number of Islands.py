@@ -24,3 +24,34 @@ class Solution:
                 numberOfIslands += s
         return numberOfIslands
         
+
+# Memory improved:
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        rows, cols = len(grid), len(grid[0])
+        numberOfIslands = 0
+
+        def markIsland(m, n):
+            if (
+                m >= rows or n >= cols or
+                m < 0 or n < 0 or
+                grid[m][n] == "0" 
+            ):
+                return
+
+            grid[m][n] = "0"
+
+            markIsland(m, n + 1)
+            markIsland(m + 1, n)
+            markIsland(m, n - 1)
+            markIsland(m - 1, n)
+
+            return
+
+        for m in range(rows):
+            for n in range(cols):
+                if grid[m][n] == "1":
+                    markIsland(m, n)
+                    numberOfIslands += 1
+        return numberOfIslands
+        
