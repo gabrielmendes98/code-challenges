@@ -1,3 +1,4 @@
+# top-down
 class Solution:
     def coinChange(self, coins: list[int], amount: int) -> int:
         cache = {0: 0}
@@ -25,3 +26,16 @@ class Solution:
         result = dp(amount)
 
         return result if result != float("inf") else -1
+
+# bottom-up
+class Solution:
+    def coinChange(self, coins: list[int], amount: int) -> int:
+        cache = [float("inf")] * (amount + 1)
+        cache[0] = 0
+
+        for n in range(1, amount + 1):
+            for coin in coins:
+                if n >= coin:
+                    cache[n] = min(cache[n], 1 + cache[n - coin])
+
+        return cache[amount] if cache[amount] != float("inf") else -1
